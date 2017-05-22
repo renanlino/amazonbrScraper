@@ -318,7 +318,8 @@ def getDB(tryCount, booksCount, startPage, endPage):
                 break
         for j in range(len(linklist)):
             print("\tObtendo livro %d de %d da %da página..." %(j+1, len(linklist), i) )
-            while True:
+            cont = 0
+            while cont < 10:
                 try:
                     book = digestBookPage(linklist[j], booksCount + 1)
                 except:
@@ -333,10 +334,12 @@ def getDB(tryCount, booksCount, startPage, endPage):
                                 "Comprar Junto 3":"", "Review 1":"",
                                 "Review 2":"", "Review 3":""}
                 tryCount+=1
-                if book:
+                if book and book["Título"] != "":
                     library.append(book)
                     booksCount+=1
                     break
+                else:
+                    cont = cont + 1
                 print("\t\tRepetindo..." )
 
         if dumpCSV(library):
